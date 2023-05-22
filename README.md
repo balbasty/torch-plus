@@ -11,7 +11,36 @@ This is a lightweight packages that:
 
 # API
 
-## helpers
+## basic helpers
+
+### indexing
+
+```python
+def moveelem(input, source, destination, dim=-1): ...
+"""Move elements in a tensor"""
+
+def slice_tensor_along(x, index, dim=-1): ...
+"""Index a tensor along one dimensions."""
+
+def slice_tensor(x, index, dim=None): ...
+"""Index a tensor along one or several dimensions."""
+```
+
+### shapes
+
+```python
+def movedims(input, source, destination): ...
+"""Moves the position of one or more dimensions"""
+
+def movedims_front2back(tensor, dim): ...
+"""Move the first N dimensions to the back"""
+
+def movedims_back2front(tensor, dim): ...
+"""Move the last N dimensions to the front"""
+
+def shiftdim(x, n=None): ...
+"""Shift the dimensions of x by n."""
+```
 
 ### Tensor backend (dtype and device)
 
@@ -45,35 +74,6 @@ def as_torch_dtype(dtype, byteswap=True, upcast=False): ...
 
 def as_numpy_dtype(dtype, upcast=False): ...
 """Convert a torch data type (or a data type name) to a torch data dtype."""
-```
-
-### indexing
-
-```python
-def moveelem(input, source, destination, dim=-1): ...
-"""Move elements in a tensor"""
-
-def slice_tensor_along(x, index, dim=-1): ...
-"""Index a tensor along one dimensions."""
-
-def slice_tensor(x, index, dim=None): ...
-"""Index a tensor along one or several dimensions."""
-```
-
-### shapes
-
-```python
-def movedims(input, source, destination): ...
-"""Moves the position of one or more dimensions"""
-
-def movedims_front2back(tensor, dim): ...
-"""Move the first N dimensions to the back"""
-
-def movedims_back2front(tensor, dim): ...
-"""Move the last N dimensions to the front"""
-
-def shiftdim(x, n=None): ...
-"""Shift the dimensions of x by n."""
 ```
 
 ## extensions
@@ -125,7 +125,7 @@ def roll(inp, shifts=1, dims=None, bound='circular'): ...
 
 ### base
 
-```
+```python
 def multivers.movedim(x, source: int, destination: int): ...
 """Backward compatible `torch.movedim`"""
 
@@ -151,7 +151,7 @@ def jit.ind2sub(ind: Tensor, shape: List[int]): ...
 def jit.sub2ind(subs: Tensor, shape: List[int]): ...
 """Convert sub indices (i, j, k) into linear indices."""
 
-def sub2ind_list(subs: List[Tensor], shape: List[int]): ...
+def jit.sub2ind_list(subs: List[Tensor], shape: List[int]): ...
 """Convert sub indices (i, j, k) into linear indices."""
 ```
 
@@ -161,7 +161,7 @@ def sub2ind_list(subs: List[Tensor], shape: List[int]): ...
 def jit.meshgrid_list_ij(tensors: List[Tensor]): ...
 """TorchScript compatible `torch.meshgrid(tensors, indexing="ij")`"""
 
-def meshgrid_list_xy(tensors: List[Tensor]): ...
+def jit.meshgrid_list_xy(tensors: List[Tensor]): ...
 """TorchScript compatible `torch.meshgrid(tensors, indexing="xy")`"""
 ```
 
@@ -199,44 +199,44 @@ def jit.pow7_(x): ...
 ### tensors
 
 ```python
-def sum_list_tensor(x: List[Tensor]) -> Tensor: ...
+def jit.sum_list_tensor(x: List[Tensor]) -> Tensor: ...
 """Compute the sum of tensors in the list. Equivalent to `sum(x)`."""
 
-def prod_list_tensor(x: List[Tensor]) -> Tensor:
+def jit.prod_list_tensor(x: List[Tensor]) -> Tensor:
 """Compute the product of tensors in the list."""
 
-def movedim(x, source: int, destination: int):
+def jit.movedim(x, source: int, destination: int):
 """Backward compatible `torch.movedim`"""
 ```
 
 ### python
 
 ```python
-def pad_list_int(x: List[int], length: int) -> List[int]: ...
+def jit.pad_list_int(x: List[int], length: int) -> List[int]: ...
 r"""Pad/crop a list of int until it reaches a target length."""
 
-def pad_list_float(x: List[float], length: int) -> List[float]: ...
+def jit.pad_list_float(x: List[float], length: int) -> List[float]: ...
 r"""Pad/crop a list of float until it reaches a target length."""
 
-def pad_list_str(x: List[str], length: int) -> List[str]: ...
+def jit.pad_list_str(x: List[str], length: int) -> List[str]: ...
 r"""Pad/crop a list of str until it reaches a target length."""
 
-def any_list_bool(x: List[bool]) -> bool: ...
+def jit.any_list_bool(x: List[bool]) -> bool: ...
 """TorchScript equivalent to `any(x)`"""
 
-def all_list_bool(x: List[bool]) -> bool: ...
+def jit.all_list_bool(x: List[bool]) -> bool: ...
 """TorchScript equivalent to `all(x)`"""
 
-def sum_list_int(x: List[int]) -> int: ...
+def jit.sum_list_int(x: List[int]) -> int: ...
 """Compute the sum of elements in the list. Equivalent to `sum(x)`."""
 
-def prod_list_int(x: List[int]) -> int: ...
+def jit.prod_list_int(x: List[int]) -> int: ...
 """Compute the product of elements in the list"""
 
-def reverse_list_int(x: List[int]) -> List[int]: ...
+def jit.reverse_list_int(x: List[int]) -> List[int]: ...
 """TorchScript equivalent to `x[::-1]`"""
 
-def cumprod_list_int(x: List[int], reverse: bool = False,
-                     exclusive: bool = False) -> List[int]: ...
+def jit.cumprod_list_int(x: List[int], reverse: bool = False,
+                         exclusive: bool = False) -> List[int]: ...
 """Cumulative product of elements in the list"""
 ```
