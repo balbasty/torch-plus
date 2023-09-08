@@ -1,0 +1,36 @@
+# ::: torchrelay.jit
+      options:
+        members:
+          - ind2sub
+          - sub2ind
+          - sub2ind_list
+          - square
+          - cube
+          - pow4
+          - pow5
+          - pow6
+          - pow7
+          - square_
+          - cube_
+          - pow4_
+          - pow5_
+          - pow6_
+          - pow7_
+          - floor_div
+          - floor_div_int
+          - trunc_div
+          - trunc_div_int
+          - meshgrid_list_ij
+          - meshgrid_list_xy
+          - pad_list_int
+          - pad_list_float
+          - pad_list_str
+          - any_list_bool
+          - all_list_bool
+          - prod_list_int
+          - sum_list_int
+          - reverse_list_int
+          - cumprod_list_int
+          - prod_list_tensor
+          - sum_list_tensor
+          - movedim

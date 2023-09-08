@@ -1,4 +1,8 @@
-# torch-plus
+<picture align="center">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/torchrelay_logo_full_dark.png">
+  <source media="(prefers-color-scheme: light)"  srcset="docs/images/torchrelay_logo_full.png">
+  <img alt="TorchRelay logo" src="docs/images/torchrelay_logo_full.png">
+</picture>
 
 This is a lightweight packages that:
 
@@ -9,6 +13,8 @@ This is a lightweight packages that:
 - implements a range of helpers compatible with TorchScript.
 
 
+**Warning:** This package is under active development and still largely untested.
+
 # API
 
 ## basic helpers
@@ -16,64 +22,74 @@ This is a lightweight packages that:
 ### indexing
 
 ```python
-def moveelem(input, source, destination, dim=-1): ...
-"""Move elements in a tensor"""
+def moveelem(input, source, destination, dim=-1):
+"""Move elements in a tensor""" ...
 
-def slice_tensor_along(x, index, dim=-1): ...
-"""Index a tensor along one dimensions."""
+def slice_tensor_along(x, index, dim=-1):
+"""Index a tensor along one dimensions.""" ...
 
-def slice_tensor(x, index, dim=None): ...
-"""Index a tensor along one or several dimensions."""
+def slice_tensor(x, index, dim=None):
+"""Index a tensor along one or several dimensions.""" ...
 ```
 
 ### shapes
 
 ```python
-def movedims(input, source, destination): ...
-"""Moves the position of one or more dimensions"""
+def movedims(input, source, destination):
+"""Moves the position of one or more dimensions""" ...
 
-def movedims_front2back(tensor, dim): ...
-"""Move the first N dimensions to the back"""
+def movedims_front2back(tensor, dim):
+"""Move the first N dimensions to the back""" ...
 
-def movedims_back2front(tensor, dim): ...
-"""Move the last N dimensions to the front"""
+def movedims_back2front(tensor, dim):
+"""Move the last N dimensions to the front""" ...
 
-def shiftdim(x, n=None): ...
-"""Shift the dimensions of x by n."""
+def shiftdim(x, n=None):
+"""Shift the dimensions of x by n.""" ...
 ```
 
 ### Tensor backend (dtype and device)
 
 ```python
-def to(*args, dtype=None, device=None): ...
-"""Move/convert tensors to a common dtype or device."""
+def to(*args, dtype=None, device=None):
+  """Move/convert tensors to a common dtype or device."""
+  ...
 
-def to_max_backend(*args, force_float=False, dtype=None, device=None): ...
-"""Move to a common dtype and device."""
+def to_max_backend(*args, force_float=False, dtype=None, device=None):
+  """Move to a common dtype and device."""
+  ...
 
-def to_max_device(*args): ...
-"""Move to a common device."""
+def to_max_device(*args):
+  """Move to a common device."""
+  ...
 
-def to_max_dtype(*args): ...
-"""Move to a common data type."""
+def to_max_dtype(*args):
+  """Move to a common data type."""
+  ...
 
-def get_backend(x): ...
-"""Return the backend (dtype and device) of a tensor"""
+def get_backend(x):
+  """Return the backend (dtype and device) of a tensor"""
+  ...
 
-def max_backend(*args, dtype=None, device=None): ...
-"""Get the (max) dtype and device."""
+def max_backend(*args, dtype=None, device=None):
+  """Get the (max) dtype and device."""
+  ...
 
-def max_device(*args): ...
-"""Find a common device for all inputs."""
+def max_device(*args):
+  """Find a common device for all inputs."""
+  ...
 
-def max_dtype(*args, force_float=False): ...
-"""Find the maximum data type from a series of inputs."""
+def max_dtype(*args, force_float=False):
+  """Find the maximum data type from a series of inputs."""
+  ...
 
-def as_torch_dtype(dtype, byteswap=True, upcast=False): ...
-"""Convert a numpy data type (or a data type name) to a torch data dtype."""
+def as_torch_dtype(dtype, byteswap=True, upcast=False):
+  """Convert a numpy data type (or a data type name) to a torch data dtype."""
+ ...
 
-def as_numpy_dtype(dtype, upcast=False): ...
-"""Convert a torch data type (or a data type name) to a torch data dtype."""
+def as_numpy_dtype(dtype, upcast=False):
+  """Convert a torch data type (or a data type name) to a torch data dtype."""
+ ...
 ```
 
 ## extensions
