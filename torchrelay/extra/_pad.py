@@ -11,7 +11,7 @@ def ensure_shape(inp, shape, mode='constant', value=0, side='post'):
     ----------
     inp : tensor
         Input tensor
-    shape : sequence
+    shape : [sequence of] int
         Output shape
     mode : "{'constant', 'replicate', 'reflect', 'mirror', 'circular'}"
         Boundary mode
@@ -26,6 +26,8 @@ def ensure_shape(inp, shape, mode='constant', value=0, side='post'):
         Padded tensor with shape `shape`
 
     """
+    if isinstance(shape, int):
+        shape = [shape]
     shape = list(shape)
     shape = shape + [1] * max(0, inp.dim() - len(shape))
     if inp.dim() < len(shape):

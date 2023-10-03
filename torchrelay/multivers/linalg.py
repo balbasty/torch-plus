@@ -133,6 +133,15 @@ __all__ = [
     # inverses
     'inv',
     'pinv',
+    # matrix functions
+    'matrix_exp',
+    'matrix_power',
+    # matrix products
+    'cross',
+    'matmul',
+    'multi_dot',
+    # misc
+    'vander',
 ]
 
 import torch
@@ -618,11 +627,22 @@ def solve_noleft_fallback(A, B, *, left=True, out=None):
     if left:
         return torch.linalg.solve(A, B, out=out)
 
-    is_vector = B.ndim in (1, A.ndim - 1)
+    n = A.shape[-1]
+    if B.ndim == 1:
+        is_vector = True
+    elif B.shape[-1] != n:
+        is_vector = False
+    elif B.shape[-2] != n:
+        is_vector = True
+    elif B.ndim == A.ndim - 1:
+        is_vector = True
+    else:
+        is_vector = False
+
     if is_vector:
-        B = B.unsqueeze(-1)
+        B = B.unsqueeze(-(1 if left else 2))
         if out is not None:
-            out = out.unsqueeze(-1)
+            out = out.unsqueeze(-(1 if left else 2))
     if not left:
         A = A.transpose(-1, -2)
         B = B.transpose(-1, -2)
@@ -634,7 +654,7 @@ def solve_noleft_fallback(A, B, *, left=True, out=None):
     if not left:
         out = out.transpose(-1, -2)
     if is_vector:
-        out = out.squeeze(-1)
+        out = out.squeeze(-(1 if left else 2))
     return out
 
 
@@ -642,23 +662,39 @@ def solve_fallback(A, B, *, left=True, out=None):
     if B.ndim > 2 and B.ndim not in (A.ndim, A.ndim-1):
         raise RuntimeError("Incompatible matrix sizes for linalg_solve")
 
-    is_vector = B.ndim in (1, A.ndim-1)
+    n = A.shape[-1]
+    if B.ndim == 1:
+        is_vector = True
+    elif left and B.shape[-1] != n:
+        is_vector = False
+    elif left and B.shape[-2] != n:
+        is_vector = True
+    elif B.ndim == A.ndim - 1:
+        is_vector = True
+    else:
+        is_vector = False
+
     if is_vector:
-        B = B.unsqueeze(-1)
+        B = B.unsqueeze(-(1 if left else 2))
         if out is not None:
-            out = out.unsqueeze(-1)
+            out = out.unsqueeze(-(1 if left else 2))
     if not left:
         A = A.transpose(-1, -2)
         B = B.transpose(-1, -2)
         if out is not None:
             out = out.transpose(-1, -2)
 
-    out = torch.solve(B, A, out=(out, None))[0]
+    if out is not None:
+        batch = torch.broadcast_shapes(A.shape[:-2], B.shape[:-2])
+        out = (out, out.new_empty([*batch, B.shape[-2], B.shape[-2]]))
+
+    print(A.shape, B.shape)
+    out = torch.solve(B, A, out=out)[0]
 
     if not left:
         out = out.transpose(-1, -2)
     if is_vector:
-        out = out.squeeze(-1)
+        out = out.squeeze(-(1 if left else 2))
     return out
 
 

@@ -536,6 +536,8 @@ def matrix_rank(A, *, atol=None, rtol=None, hermitian=False, out=None):
 
     History
     -------
+    !!! added "1.13"
+        `torch.matrix_rank` was removed in torch version `1.13`.
     !!! added "1.11"
         `tol` was replaced with `atol` and `rtol` in torch version `1.11`.
     !!! added "1.8"
@@ -981,6 +983,8 @@ def eig(A, *, out=None):
 
     History
     -------
+    !!! added "1.13"
+        `torch.eig` was removed in torch version `1.13`.
     !!! added "1.9"
         `torch.linalg.eig` was added and `torch.eig` was deprecated in
         torch version `1.9`.
@@ -1043,6 +1047,8 @@ def eigvals(A, *, out=None):
 
     History
     -------
+    !!! added "1.13"
+        `torch.eig` was removed in torch version `1.13`.
     !!! added "1.9"
         `torch.linalg.eigvals` was added in torch version `1.9`.
 
@@ -1150,8 +1156,8 @@ def eigh(A, UPLO='L', *, out=None):
 
     History
     -------
-    !!! added "2.0"
-        `torch.symeig` was removed in torch version `2.0`.
+    !!! added "1.13"
+        `torch.symeig` was removed in torch version `1.13`.
     !!! added "1.9"
         `torch.symeig` was deprecated in torch version `1.9`.
     !!! added "1.8"
@@ -1229,8 +1235,8 @@ def eigvalsh(A, UPLO='L', *, out=None):
 
     History
     -------
-    !!! added "2.0"
-        `torch.symeig` was removed in torch version `2.0`.
+    !!! added "1.13"
+        `torch.symeig` was removed in torch version `1.13`.
     !!! added "1.9"
         `torch.symeig` was deprecated in torch version `1.9`.
     !!! added "1.8"
@@ -1492,10 +1498,10 @@ def solve(A, B, *, left=True, out=None):
 
     History
     -------
-    !!! added "2.0"
-        `torch.solve` was removed in torch version `2.0`.
     !!! added "1.13"
         The `left` keyword was added in torch version `1.13`.
+    !!! added "1.12"
+        `torch.solve` was removed in torch version `1.12`.
     !!! added "1.8"
         `torch.linalg.solve(A, B) -> X` was introduced in torch version `1.8`.
         It supersedes the original `torch.solve(B, A) -> (X, LU)`.
@@ -1761,8 +1767,8 @@ def lstsq(A, B, rcond=None):
 
     History
     -------
-    !!! added "2.0"
-        `torch.lstsq` was removed in torch version `2.0`.
+    !!! added "1.13"
+        `torch.lstsq` was removed in torch version `1.13`.
     !!! added "1.9"
         `torch.linalg.lstsq` was introduced and `torch.lstsq`
         was deprecated in torch version `1.9`.

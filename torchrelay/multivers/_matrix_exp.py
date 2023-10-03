@@ -133,7 +133,7 @@ def matrix_power_forward(X, n: int):
         return I.expand(X.shape)
     if n == 1:
         return X
-    m = max(0, int(math.floor(math.log2(n))))
+    m = max(0, int(math.floor(math.log(n) / math.log(2))))
     Xn = matrix_power_square(X, m)
     n = n - 2**m
     while n:
@@ -141,7 +141,7 @@ def matrix_power_forward(X, n: int):
             Xn = Xn.matmul(X)
             n -= 1
         else:
-            m = max(0, int(math.floor(math.log2(n))))
+            m = max(0, int(math.floor(math.log(n) / math.log(2))))
             Xn = Xn.matmul(matrix_power_square(X, m))
             n = n - 2**m
     return Xn
